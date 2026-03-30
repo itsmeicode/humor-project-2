@@ -7,16 +7,10 @@ const eslintConfig = defineConfig([
   ...nextTs,
   globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
   {
-    files: ["app/admin/images/page.tsx"],
+    files: ["app/admin/images/ImagesClient.tsx"],
     rules: {
       "react-hooks/set-state-in-effect": "off",
       "@next/next/no-img-element": "off",
-    },
-  },
-  {
-    files: ["app/admin/captions/CaptionsList.tsx"],
-    rules: {
-      "react-hooks/set-state-in-effect": "off",
     },
   },
 ]);
