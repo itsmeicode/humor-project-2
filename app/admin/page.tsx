@@ -114,7 +114,7 @@ export default async function AdminDashboardPage() {
       <section className="mt-8 grid gap-6 lg:grid-cols-2">
         <div className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
           <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-            Public vs total captions
+            Public vs Total Captions
           </h2>
           <p className="mt-1 text-xs text-zinc-500">
             Share of rows with{" "}
@@ -151,7 +151,7 @@ export default async function AdminDashboardPage() {
 
         <div className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
           <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-            Engagement & density
+            Engagement & Density
           </h2>
           <p className="mt-1 text-xs text-zinc-500">
             Votes recorded in the last 7 days, and average captions per image
@@ -189,13 +189,13 @@ export default async function AdminDashboardPage() {
       <section className="mt-8 rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
           <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-            Newest captions
+            Newest Captions
           </h2>
           <Link
             href="/admin/captions"
             className="text-xs font-medium text-violet-600 hover:underline dark:text-violet-400"
           >
-            All captions →
+            All Captions →
           </Link>
         </div>
         <p className="mt-1 text-xs text-zinc-500">
