@@ -9,7 +9,8 @@ Humor Admin is an admin dashboard for managing the Humor Caption platform's stag
 - `/auth/callback` — OAuth callback route
 - `/auth/signout` — Sign-out endpoint
 - `/access-denied` — Shown when user lacks superadmin access
-- `/admin` — Protected statistics dashboard
+- `/admin` — Protected overview dashboard (counts + recent captions)
+- `/admin/caption-stats` — Protected caption-rating statistics dashboard
 - `/admin/users` — Protected read-only profiles table
 - `/admin/images` — Protected image management (CRUD + file upload)
 - `/admin/captions` — Protected read-only captions
@@ -30,7 +31,8 @@ Humor Admin is an admin dashboard for managing the Humor Caption platform's stag
 
 1. Go to `/` and sign in with Google.
 2. If your profile has `is_superadmin == true`, you'll land on the `/admin` dashboard with aggregate stats: profile/image/caption counts, public vs private caption ratio chart, vote engagement metrics, and recent captions.
-3. Use the sidebar to navigate between sections (Users & Content, Humor, LLM, Access).
+3. Click **Caption Stats** in the Overview group for a deeper look at what users are rating: KPI strip, top 10 captions by `like_count`, top 10 by raw vote engagement, zero-vote samples, and a per-flavor breakdown.
+4. Use the sidebar to navigate between sections (Users & Content, Humor, LLM, Access).
 4. On CRUD pages (e.g. Terms, Images), create new rows with the form at the top, edit inline, or delete with confirmation.
 5. On the Images page, create rows by pasting a URL or uploading a file to Supabase Storage.
 6. Read-only pages (e.g. Captions, Humor Flavors) display paginated data.
@@ -52,6 +54,18 @@ The overview page aggregates data from multiple tables:
 - Total votes (all time) and votes (last 7 days)
 - Average captions per image
 - 10 most recent captions
+
+### Caption Stats dashboard (no DB changes)
+
+A dedicated `/admin/caption-stats` page focused on what users are rating:
+
+- KPI strip: total captions, captions with at least one vote, captions with zero votes, total votes cast
+- Top 10 captions by `like_count` (the cached score on the `captions` row)
+- Top 10 most-voted captions by raw `caption_votes` engagement (separate metric — includes upvotes and downvotes)
+- First 10 zero-vote captions (the "needs more eyes" pile)
+- Per-flavor breakdown grouped by `humor_flavors.slug`, paginated 25 per page
+
+Aggregations are computed client-side after fetching all rows from `captions`, `caption_votes`, and `humor_flavors` via parallel paginated `range()` queries (concurrency 50, chunks of 1000), since the shared staging database rules out custom RPC functions. A `loading.tsx` skeleton shows immediately while the fetches resolve.
 
 ### Data management (Supabase mutations)
 
